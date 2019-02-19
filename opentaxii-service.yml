@@ -10,7 +10,7 @@ spec:
     port: 80
     targetPort: 9000
   selector:
-    io.kompose.service: opentaxii
+    app: opentaxii
   type: LoadBalancer
 status:
   loadBalancer: {}
