@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: opentaxii
+  name: opentaxii
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: opentaxii
+    spec:
+      containers:
+      - env:
+        - name: OPENTAXII_AUTH_SECRET
+          value: secret
+        - name: OPENTAXII_DOMAIN
+          value: 0.0.0.0:9000
+        image: eclecticiq/opentaxii
+        name: opentaxii
+        ports:
+        - containerPort: 9000
+        resources: {}
+        volumeMounts:
+        - mountPath: /input
+          name: opentaxii-claim0
+          readOnly: false
+      volumes:
+      - name: opentaxii-claim0
+        configMap:
+          name: data-configuration
+          readOnly: false
+status: {}
